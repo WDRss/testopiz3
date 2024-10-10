@@ -2,7 +2,7 @@
 /plugin/;
 
 / {
-	compatible = "allwinner,sun8i-h3";
+	compatible = "allwinner,sun50i-h616";
 
 	fragment@0 {
 		target = <&spi0>;
@@ -24,11 +24,11 @@
 		__overlay__ {
 			// Set up pins
 			ili9486_pins: ili9486_pins {
-				allwinner,pins = "PA2", "PC7"; // Add DC/RS nad RST pins here
-				allwinner,function = "gpio_in";
+				allwinner,pins = "PC7", "PC14"; // Add DC/RS nad RST pins here
+				allwinner,function = "gpio_out", gpio_out;
 			};
 		ads7846_pins: ads7846_pins {
-				pins= "PA1";
+				pins= "PH6";
 				function = "irq";
      			 };
 		};
@@ -57,9 +57,9 @@
 				// Select pins: 1st number = pos. of letter in the alphabet - 1
 				//              2nd number = pin number
 				//              3rd number = DON'T CHANGE! (1 = ACTIVE_LOW, 0 = ACTIVE_HIGH)
-				// Example: PA2 = <&pio 0 2 1>
+				// Example: PC14 = <&pio 2 14 1>
 				//          PC7 = <&pio 2 7 0>
-				reset-gpios = <&pio 0 2 1>; // RST pin
+				reset-gpios = <&pio 2 14 1>; // RST pin
 				dc-gpios = <&pio 2 7 0>; // DC/RS pin
 				debug = <0>;
 
@@ -84,9 +84,9 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&ads7846_pins>;
 				spi-max-frequency = <2000000>;
-				interrupts = <0 1 2>; /* PA1 IRQ_TYPE_EDGE_FALLING */
+				interrupts = <0 1 2>; /* PH6 IRQ_TYPE_EDGE_FALLING */
 				interrupt-parent = <&pio>;
-				pendown-gpio = <&pio 0 1 0>; /* PA1 */
+				pendown-gpio = <&pio 0 1 0>; /* PH6 */
 				ti,x-min = /bits/ 16 <0>;
 				ti,y-min = /bits/ 16 <0>;
 				ti,x-max = /bits/ 16 <0x0FFF>;
