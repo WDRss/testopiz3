@@ -7,7 +7,7 @@
         __overlay__ {
             status = "okay";
 	    cs-gpios = <&pio 7 9 0>,<&pio 2 5 0>; /*PH9=CS0 for lcd, PH5=CS1 for touch*/
-            ili9341: ili9341@0 {
+            ili9486: ili9486@0 {
                 compatible = "ilitek,ili9486";
                 reg = <0>;
                 pinctrl-names = "default";
