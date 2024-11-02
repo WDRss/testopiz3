@@ -16,19 +16,19 @@
                 bgr = <0>;
                 fps = <30>;
                 buswidth = <8>;
-                reset-gpios = <&pio 0 7 1>; /* PH7 */
-                dc-gpios = <&pio 0 2 0>; /* PH2 */
-                debug = <3>;
+                reset-gpios = <&pio 0 14 1>; /* PC14 */
+                dc-gpios = <&pio 2 0>; /* PH2 */
+                debug = <0>;
             };
 
-            ads7846: ads7846@1 {
+            xpt2046: xpt2046@1 {
                 compatible = "ti,ads7846";
                 reg = <1>;
                 pinctrl-names = "default";
                 spi-max-frequency = <1000000>;
                 interrupt-parent = <&pio>;
-                interrupts = <2 5 2>; /* PC5 - IRQ */
-                pendown-gpio = <&pio 2 5 1>; /* PC5 */
+                interrupts = <2 7 2>; /* PC7- IRQ */
+                pendown-gpio = <&pio 2 7 1>; /* PC7 */
                 
                 /* OPTIONS */
                 ti,x-min = /bits/ 16 <0>;
