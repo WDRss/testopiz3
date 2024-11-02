@@ -28,7 +28,7 @@
                                 buswidth = <8>;
                                 regwidth = <16>;
                                 bgr = <0>;
-                                reset-gpios = <&pio 0 2 1>; /* PC14 */
+                                reset-gpios = <&pio 0 14 1>; /* PC14 */
                                 dc-gpios = <&pio 0 2 0>; /* PH2 */
                                 //debug = <0>;
 
