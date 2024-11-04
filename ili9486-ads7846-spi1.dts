@@ -1,5 +1,5 @@
 /*
-OrangePi Zero 3 -> ILI9341 LCD connections
+OrangePi Zero 3 -> ILI9486 LCD connections
 SPI CLOCK = PH6
 SPI DO (LCD MISO) = PH8 (OPIZ MISO)
 SPI DI (LCD MOSI) = PH7 (OPIZ MOSI)
