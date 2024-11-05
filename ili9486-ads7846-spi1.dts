@@ -30,7 +30,7 @@
                                 bgr = <0>;
                                 reset-gpios = <&pio 0 8 1>; /* PC15 */
                                 dc-gpios = <&pio 0 5 0>; /* PC5*/
-                                //debug = <0>;
+                                //debug = <3>;
 
                                 init = <0x10000b0 0x00
                                         0x1000011
