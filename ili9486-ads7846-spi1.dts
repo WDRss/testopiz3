@@ -23,8 +23,8 @@
 		target = <&pio>;
 		__overlay__ {
 			ili9486_pins: ili9486_pins {
-				allwinner,pins = "PH7", "PC14";
-				allwinner,function = "gpio_in";
+				allwinner,pins = "PC7", "PC14";
+				allwinner,function = "gpio_in", "gpio_in";
 			};
 		};
 	};
