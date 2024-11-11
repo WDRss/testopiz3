@@ -23,7 +23,7 @@
 		target = <&pio>;
 		__overlay__ {
 			ili9486_pins: ili9486_pins {
-				allwinner,pins = "PC15", "PH2";
+				allwinner,pins = "PH7", "PC14";
 				allwinner,function = "gpio_in";
 			};
 		};
@@ -49,8 +49,8 @@
 				fps = <30>;
 				buswidth = <8>;
 				regwidth = <16>;
-				reset-gpios = <&pio 0 15 1>;
-				dc-gpios = <&pio 0 2 0>;
+				reset-gpios = <&pio 0 7 1>;
+				dc-gpios = <&pio 0 14 0>;
 				debug = <0>;
 
 				init = <0x10000b0 0x00
