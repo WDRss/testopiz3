@@ -1,115 +1,75 @@
-/dts-v1/;
+dts-v1/;
 /plugin/;
 
 / {
-	compatible = "allwinner,sun50i-h616";
+    compatible = "allwinner,sun50i-h616";
 
-	fragment@0 {
-		target = <&spi1>;
-		__overlay__ {
-			status = "okay";
+        fragment@0 {
+                target = <&spi1>;
+                __overlay__ {
+                        status = "okay";
+                };
+        };
 
-			spidev@0{
-				status = "disabled";
-			};
+        fragment@1 {
+                target = <&spi1>;
+                __overlay__ {
+                        /* needed to avoid dtc warning */
+                        #address-cells = <1>;
+                        #size-cells = <0>;
 
-			spidev@1{
-				status = "disabled";
-			};
-		};
-	};
+                        ili9486: ili9486@0 {
+                                compatible = "ilitek,ili9341";
+                                reg = <0>;
+                                spi-max-frequency = <20000000>;
+                                rotate = <90>;
+                                fps = <30>;
+                                buswidth = <8>;
+                                regwidth = <16>;
+                                bgr = <0>;
+                                reset-gpios = <&pio 2 14 1>; /* PC14 */
+                                dc-gpios = <&pio 2 6 0>; /* PC6*/
+                                //debug = <3>;
 
-	fragment@1 {
-		target = <&pio>;
-		__overlay__ {
-			// Set up pins
-			ili9486_pins: ili9486_pins {
-				allwinner,pins = "PC6", "PC14"; // Add DC/RS nad RST pins here
-				allwinner,function = "gpio_out", gpio_out;
-			};
-		ads7846_pins: ads7846_pins {
-				pins= "PC10";
-				function = "irq";
-     			 };
-		};
-	};
+		                init = <0x10000b0 0x00 // Interface Mode Control
+		                        0x1000011  // Sleep Out
+		                        0x20000ff  // Delay (255ms)
+		                        0x10000C0 0x0D 0x0D  // Power Control 1
+		                        0x10000C1 0x43  // Power Control 2
+		                        0x10000C5 0x00 0x48 0x80  // VCOM Control 1
+		                        0x10000C7 0x00  // VCOM Control 2
+		                        0x1000036 0x28  // Memory Access Control (Rotação)
+		                        0x100003A 0x55  // Pixel Format Set (16bit)
+		                        0x10000B1 0xB0 0x11  // Frame Rate Control
+		                        0x10000F0 0x01 // Enable Extended Comand Set
+		                        0x10000F6 0x00 0x01 0x32 // SPI ilInterface Control
+		                        0x1000026 0x01 // Gamma Set
+		                        0x10000E0 0x0F 0x31 0x2B 0x0C 0x0E 0x08 0x4E 0xF1 0x37 0x07 0x10 0x03 0x0E 0x09 0x00  // Positive Gamma Correction
+		                        0x10000E1 0x00 0x0E 0x14 0x03 0x11 0x07 0x31 0xC1 0x48 0x08 0x0F 0x0C 0x31 0x36 0x0F  // Negative Gamma Correction
+		                        0x10000B6 0x02 0x02 0x3B  // Display Function Control
+		                        0x1000011  // Sleep Out
+		                        0x20000ff  // Delay (255ms)
+		                        0x1000029>; // Display ON
+                        };
+                        ads7846: ads7846@1 {
+                                compatible = "ti,ads7846";
+                                reg = <1>;
 
-	fragment@2 {
-		target = <&spi0>;
-		__overlay__ {
-			/* needed to avoid dtc warning */
-			#address-cells = <1>;
-			#size-cells = <0>;
+                                spi-max-frequency = <2000000>;
+                                interrupts = <2 10 2>; /* high-to-low edge triggered */
+                                interrupt-parent = <&pio>;
+                                pendown-gpio = <&pio 2 10 0>;
+                                ti,keep-vref-on = <1>;
+                                ti,x-min = /bits/ 16 <200>;
+                                ti,x-max = /bits/ 16 <3900>;
+                                ti,y-min = /bits/ 16 <200>;
+                                ti,y-max = /bits/ 16 <3900>;
+                                ti,x-plate-ohms = /bits/ 16 <60>;
+                                ti,pressure-max = /bits/ 16 <255>;
+                                ti,swap-xy = <1>;
 
-			ili9486: ili9486@0{
-				compatible = "ilitek,ili9341";
-				reg = <0>;
-				pinctrl-names = "default";
-				pinctrl-0 = <&ili9486_pins>;
 
-				spi-max-frequency = <20000000>;
-				txbuflen = <32768>;
-				rotate = <90>;
-				bgr = <0>;
-				fps = <30>;
-				buswidth = <8>;
-				regwidth = <16>;
-				// Select pins: 1st number = pos. of letter in the alphabet - 1
-				//              2nd number = pin number
-				//              3rd number = DON'T CHANGE! (1 = ACTIVE_LOW, 0 = ACTIVE_HIGH)
-				// Example: PC14 = <&pio 2 14 1>
-				//          PC7 = <&pio 2 6 0>
-				reset-gpios = <&pio 2 14 1>; // RST pin
-				dc-gpios = <&pio 2 6 0>; // DC/RS pin
-				debug = <0>;
-
-                init = <0x10000b0 0x00 // Interface Mode Control
-                        0x1000011  // Sleep Out
-                        0x20000ff  // Delay (255ms)
-                        0x10000C0 0x0D 0x0D  // Power Control 1
-                        0x10000C1 0x43  // Power Control 2
-                        0x10000C5 0x00 0x48 0x80  // VCOM Control 1
-                        0x10000C7 0x00  // VCOM Control 2
-                        0x1000036 0x28  // Memory Access Control (Rotação)
-                        0x100003A 0x55  // Pixel Format Set (16bit)
-                        0x10000B1 0xB0 0x11  // Frame Rate Control
-                        0x10000F0 0x01 // Enable Extended Comand Set
-                        0x10000F6 0x00 0x01 0x32 // SPI ilInterface Control
-                        0x1000026 0x01 // Gamma Set
-                        0x10000E0 0x0F 0x31 0x2B 0x0C 0x0E 0x08 0x4E 0xF1 0x37 0x07 0x10 0x03 0x0E 0x09 0x00  // Positive Gamma Correction
-                        0x10000E1 0x00 0x0E 0x14 0x03 0x11 0x07 0x31 0xC1 0x48 0x08 0x0F 0x0C 0x31 0x36 0x0F  // Negative Gamma Correction
-                        0x10000B6 0x02 0x02 0x3B  // Display Function Control
-                        0x1000011  // Sleep Out
-                        0x20000ff  // Delay (255ms)
-                        0x1000029>; // Display ON
-			};
-			tft35a_ts: tft35a_ts@1 {
-				compatible = "ti,ads7846";
-				reg = <1>;
-				status = "okay";
-				pinctrl-names = "default";
-				pinctrl-0 = <&ads7846_pins>;
-				spi-max-frequency = <2000000>;
-				interrupts = <0 6 2>; /* PC6 IRQ_TYPE_EDGE_FALLING */
-				interrupt-parent = <&pio>;
-				pendown-gpio = <&pio 0 6 0>; /* PC6 */
-				ti,x-min = /bits/ 16 <0>;
-				ti,y-min = /bits/ 16 <0>;
-				ti,x-max = /bits/ 16 <0x0FFF>;
-				ti,y-max = /bits/ 16 <0x0FFF>;
-				ti,pressure-min = /bits/ 16 <0>;
-				ti,pressure-max = /bits/ 16 <0xFFFF>;
-				ti,x-plate-ohms = /bits/ 16 <400>;
-			};
-		};
-	};
-	__overrides__ {
-		speed = <&ili9341>,"spi-max-frquency:0";
-		txbuflen = <&ili9341>,"txbuflen:0";
-		rotate = <&ili9341>,"rotate:0";
-		fps = <&ili9341>,"fps:0";
-		bgr = <&ili9341>,"bgr:0";
-		debug = <&ili9341>,"debug:0";
-		swapxy = <&tft35a_ts>,"ti,swap-xy?";
-	};	
+                        };
+                };
+        };
 };
