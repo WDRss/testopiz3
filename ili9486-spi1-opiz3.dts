@@ -58,7 +58,7 @@ dts-v1/;
                                 spi-max-frequency = <2000000>;
                                 interrupts = <2 10 2>; /* high-to-low edge triggered */
                                 interrupt-parent = <&pio>;
-                                pendown-gpio = <&pio 2 10 0>;
+                                pendown-gpio = <&pio 2 10 1>;
                                 ti,keep-vref-on = <1>;
                                 ti,x-min = /bits/ 16 <200>;
                                 ti,x-max = /bits/ 16 <3900>;
