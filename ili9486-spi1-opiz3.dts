@@ -16,6 +16,9 @@
                 bgr = <0>;
                 fps = <30>;
                 buswidth = <8>;
+                regwidth = <16>;
+                height = <480>;
+                width = <320>;
                 reset-gpios = <&pio 2 14 1>; /* PC14 */
                 dc-gpios = <&pio 2 6 0>; /* PC6 */
                 debug = <3>;
