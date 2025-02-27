@@ -8,10 +8,10 @@
             status = "okay";
 	    cs-gpios = <&pio 7 5 0>; /*PH5=CS0 PC10=CS1*/
             ili9486: ili9486@1 {
-                compatible = "ilitek,ili9486";
+                compatible = "waveshare,rpi-lcd-35","ilitek,ili9486";
                 reg = <0>;
                 pinctrl-names = "default";
-                spi-max-frequency = <20000000>;
+                spi-max-frequency = <30000000>;
                 rotate = <270>;
                 bgr = <0>;
                 fps = <30>;
