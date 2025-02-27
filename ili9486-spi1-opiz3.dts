@@ -19,8 +19,8 @@
                 regwidth = <16>;
                 height = <480>;
                 width = <320>;
-                reset-gpios = <&pio 2 14 1>; /* PC14 */
-                dc-gpios = <&pio 2 6 0>; /* PC6 */
+                reset-gpios = <&pio 2 7 1>; /* PC7 */
+                dc-gpios = <&pio 2 14 0>; /* PC14 */
                 debug = <3>;
                 init = <0x10000b0 0x00 // Interface Mode Control
                         0x1000011  // Sleep Out
