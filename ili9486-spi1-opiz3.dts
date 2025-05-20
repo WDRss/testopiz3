@@ -6,7 +6,7 @@
         target = <&spi1>;
         __overlay__ {
             status = "okay";
-	    cs-gpios = <&pio 7 5 0>,<&pio 2 15 0>; /*PH5=CS0 for lcd, PC15=CS1 for touch*/
+	    cs-gpios = <&pio 7 5 0>,<&pio 2 10 0>; /*PH5=CS0 for lcd, PC10=CS1 for touch*/
             display: display@0 {
                 compatible = "ilitek,ili9341";
                 reg = <0>;
