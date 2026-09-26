@@ -1,4 +1,4 @@
-# orangepipc
+# orangepizero3
 orangepi pc 3.5 tft screen dts file 
 
 If you decide to use orangepi with armbian on 3.5" tft screen (driver ili9486) you have to compile and use this file.
